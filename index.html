@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BEUShareBox</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="topbar" role="banner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">BEU</span>
+        <div>
+          <h1>BEUShareBox</h1>
+          <p>Mini Product Sharing Platform</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <div class="profile-summary" aria-label="Current user">
+          <img id="profile-avatar" class="profile-avatar" alt="User avatar" />
+          <span id="profile-name">Guest</span>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">
+          Dark Mode
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="panel profile-panel" aria-labelledby="profile-title">
+        <h2 id="profile-title">User Profile</h2>
+        <form id="profile-form" novalidate>
+          <label for="username-input">Username</label>
+          <input id="username-input" name="username" type="text" maxlength="30" required />
+
+          <label for="avatar-url-input">Avatar Image URL (Optional)</label>
+          <input
+            id="avatar-url-input"
+            name="avatar-url"
+            type="url"
+            placeholder="https://example.com/avatar.jpg"
+          />
+
+          <div class="actions">
+            <button type="submit">Save Profile</button>
+          </div>
+          <p id="profile-error" class="error" role="alert" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section aria-labelledby="form-title" class="panel">
+        <h2 id="form-title">Add Product</h2>
+        <form id="product-form" novalidate>
+          <label for="product-link">Product Source Link (Auto-fill + Open Original)</label>
+          <input
+            id="product-link"
+            name="product-link"
+            type="url"
+            placeholder="Paste a link to autofill the fields"
+          />
+          <img
+            id="autofill-image-preview"
+            class="autofill-image-preview"
+            alt="Auto-filled product preview"
+            hidden
+          />
+
+          <label for="product-title">Title</label>
+          <input id="product-title" name="title" type="text" maxlength="80" required />
+
+          <label for="product-description">Description</label>
+          <textarea
+            id="product-description"
+            name="description"
+            rows="4"
+            maxlength="300"
+            required
+          ></textarea>
+
+          <label for="product-price">Price</label>
+          <input
+            id="product-price"
+            name="price"
+            type="number"
+            min="0"
+            step="0.01"
+            inputmode="decimal"
+            required
+          />
+
+          <label for="product-category">Category</label>
+          <select id="product-category" name="category" required>
+            <option value="">Select category</option>
+            <option value="electronics">Electronics</option>
+            <option value="books">Books</option>
+            <option value="fashion">Fashion</option>
+            <option value="home">Home</option>
+            <option value="other">Other</option>
+          </select>
+
+          <label for="product-image-url">Image URL (Optional)</label>
+          <input
+            id="product-image-url"
+            name="image-url"
+            type="url"
+            placeholder="https://example.com/product-image.jpg"
+          />
+
+          <div class="actions">
+            <button type="submit">Add Product</button>
+            <button id="reset-product" class="ghost" type="reset">Reset</button>
+          </div>
+
+          <p id="form-error" class="error" role="alert" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="panel data-panel" aria-labelledby="data-title">
+        <h2 id="data-title">Import / Export Data</h2>
+        <div class="actions">
+          <button id="export-data" type="button">Export JSON</button>
+          <button id="import-data-btn" class="ghost" type="button">Import JSON</button>
+          <input id="import-data-input" type="file" accept="application/json,.json" hidden />
+        </div>
+        <p id="data-error" class="error" role="alert" aria-live="polite"></p>
+      </section>
+
+      <section class="stats-grid" aria-label="Product summary" aria-live="polite">
+        <article class="stat-card">
+          <h2 id="total-products">0</h2>
+          <p>Total Products</p>
+        </article>
+        <article class="stat-card">
+          <h2 id="total-likes">0</h2>
+          <p>Total Likes</p>
+        </article>
+        <article class="stat-card">
+          <h2 id="most-liked-product">-</h2>
+          <p>Most Liked Product</p>
+        </article>
+        <article class="stat-card">
+          <h2 id="category-distribution">-</h2>
+          <p>Category Distribution</p>
+        </article>
+      </section>
+
+      <section class="panel" aria-labelledby="filters-title">
+        <h2 id="filters-title">Category Filter and Search</h2>
+
+        <div class="toolbar">
+          <div>
+            <label for="category-filter">Category Filter</label>
+            <select id="category-filter" name="category-filter">
+              <option value="all">All Categories</option>
+              <option value="electronics">Electronics</option>
+              <option value="books">Books</option>
+              <option value="fashion">Fashion</option>
+              <option value="home">Home</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="search-input">Search Products</label>
+            <input
+              id="search-input"
+              name="search"
+              type="search"
+              placeholder="Search by title or description"
+            />
+          </div>
+
+          <div>
+            <label for="sort-by">Sort By</label>
+            <select id="sort-by" name="sort-by">
+              <option value="newest">Newest</option>
+              <option value="price">Price</option>
+              <option value="likes">Likes</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="my-products-toggle">My Products</label>
+            <button
+              id="my-products-toggle"
+              class="ghost"
+              type="button"
+              aria-pressed="false"
+            >
+              Show Only Mine: Off
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="product-list" aria-labelledby="products-title">
+        <h2 id="products-title">Products</h2>
+
+        <article class="product-card" data-empty="true" aria-live="polite">
+          <h3>No products yet</h3>
+          <p>Add your first product using the form above.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 BEUShareBox Classroom Project</p>
+    </footer>
+
+    <div id="product-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="modal-backdrop" data-close-modal="true"></div>
+      <article class="modal-panel" role="document">
+        <button
+          id="modal-close"
+          class="modal-close"
+          type="button"
+          aria-label="Close product details"
+        >
+          ×
+        </button>
+        <div id="modal-content"></div>
+      </article>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
